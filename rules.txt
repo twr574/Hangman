@@ -1,0 +1,22 @@
+HANGMAN!
+---------
+
+- A one-player game where you have to guess a randomly chosen word.
+            
+- Each turn, either guess a letter in the word, or the word itself (upper or lower case).
+              
+- If you succeed (by guessing the word, or all the letters in the word), your score increases.
+              
+	- The score you get for each round is dependent on the difficulty and number of incorrect guesses remaining.   
+              
+- If you fail to guess the word, you lose a life. 
+
+	- You can sometimes gain extra lives by accumulating spare guesses over many rounds.
+
+- Spellings use British English.
+	
+	- No punctuations (e.g. hyphens, apostrophes) or abbreviations are allowed.
+
+	- Some loan-words, archaic words and technical terms may be found on harder difficulties.
+
+	- Ignore diacritical marks (e.g. in 'naive'). The 'ae' ligature is spelled with two letters.
