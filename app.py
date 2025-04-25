@@ -39,6 +39,30 @@ def printfile(file):
     openfile.close()
 
 
+def check_continue(play,score,lives,excess_try):
+    """Checks whether to continue with another game."""
+    next_game = ''
+    if lives > 0:
+        while True:
+            next_game = input('\n\nContinue (YES/NO)?\n')
+            if next_game in ['YES','Y','','1']:
+                break
+            elif next_game in ['NO','N','0']:
+                print('\nGAME OVER!\n')
+                os.system('cls||clear')
+                lives = 3
+                excess_try = 0
+                play -= 1
+                break
+        else:
+            print('\nGAME OVER!\n')
+            os.system('cls||clear')
+            lives = 3
+            excess_try = 0
+            play -= 1
+        return (play,score,lives,excess_try)
+
+
 def playintro(title,hi_score,play):
     """Plays the intro and main menu."""
     printfile(title)
@@ -185,7 +209,7 @@ def playgame(play,score,lives,excess_try):
         score_mod = min(math.floor(math.log(score/scale,log_scale)),4)
 
     max_lengths = {1: 10, 2: 15, 3: 20, 5: 25, 10: 30}
-    min_lengths = {1: 5, 2: 4, 3: 4, 5: 4, 20: 4}
+    min_lengths = {1: 5, 2: 4, 3: 4, 5: 4, 10: 4}
     max_length = max_lengths[difficulty]
     min_length = min_lengths[difficulty]
 
@@ -249,31 +273,13 @@ def playgame(play,score,lives,excess_try):
             print(f'BONUS 1UP!\n\nNo of Lives is now {lives}.\n')
         printslow(f'Score = {score}')
         time.sleep(0.5)
-        next_game = input('\n\nContinue (YES/NO)?\n')
-        if next_game in ['YES','Y','','1']:
-            play = 2
-        elif next_game in ['NO','N','0']:
-            print('\nGAME OVER!\n')
-            os.system('cls||clear')
-            play = 1
+        (play,score,lives,excess_try) = check_continue(play,score,lives,excess_try)
+
     else:
         printfile('turn12')
         lives -= 1
-        printslow(f'\n\nThe word was {word_choice}\n')
-        if lives > 0:
-            print(f'\nLives Remaining {lives}\n')
-            next_game = input('Continue (YES/NO)?\n')
-            if next_game in ['YES','Y','','1']:
-                play = 2
-            elif next_game in ['NO','N','0']:
-                print('\nGAME OVER!\n')
-                time.sleep(3)
-                os.system('cls||clear')
-                play = 1
-        else:
-            print('\nGAME OVER!\n')
-            os.system('cls||clear')
-            play = 1
+        printslow(f'\n\nThe word was {word_choice}.\n')
+        (play,score,lives,excess_try) = check_continue(play,score,lives,excess_try)
 
     return (play,score,lives,excess_try)
 
@@ -299,5 +305,6 @@ while True:
         (play,score,lives,excess_try) = playgame(play,score,lives,excess_try)
         if score >= hi_score:
             hi_score = score
+        score = 0
     else:
         break
