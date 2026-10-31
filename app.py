@@ -45,9 +45,9 @@ def check_continue(play,score,lives,excess_try):
     if lives > 0:
         while True:
             next_game = input('\n\nContinue (YES/NO)?\n')
-            if next_game in ['YES','Y','','1']:
+            if str(next_game).upper() in ['YES','Y','','1']:
                 break
-            elif next_game in ['NO','N','0']:
+            elif str(next_game).upper() in ['NO','N','0']:
                 print('\nGAME OVER!\n')
                 os.system('cls||clear')
                 lives = 3
@@ -256,7 +256,7 @@ def playgame(play,score,lives,excess_try):
             letter_used = ', '.join(sorted(set(letter_stock)))
             complete = [x for x in word_choice if x not in letter_stock] == []
         else:
-            if guess == word_choice:
+            if guess.upper() == word_choice:
                 complete = 1
             else:
                 guess_no += 1
@@ -305,6 +305,10 @@ while True:
         (play,score,lives,excess_try) = playgame(play,score,lives,excess_try)
         if score >= hi_score:
             hi_score = score
-        score = 0
+            scorefile.truncate(0)
+            scorefile.seek(0)
+            scorefile.write(str(hi_score))
+            scorefile.flush()
+            os.fsync(scorefile)
     else:
         break
